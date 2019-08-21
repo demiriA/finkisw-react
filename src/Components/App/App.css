@@ -1,7 +1,12 @@
 *{
   padding: 0px;
   margin: 0px;
+  font-size: 14px;
+  font-family: "Century Gothic";
 }
-.dropdown-toggle{
+.dropdown-toggle {
   cursor: pointer;
+}
+.course-link-prev{
+    font-size: 24px;
 }
