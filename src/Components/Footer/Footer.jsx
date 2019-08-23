@@ -5,7 +5,11 @@ function Footer() {
         <footer>
             <hr />
             <p>&copy; CSE 2019 - <a href="https://github.com/demiriA/finkisw-react" rel="noopener noreferrer" target="_blank">GITHUB </a>
-                <a href="https://github.com/demiriA/finkisw-react" rel="noopener noreferrer" target="_blank">API</a></p>
+                <a href="https://github.com/demiriA/finkisw-react" rel="noopener noreferrer" target="_blank">API</a>
+                <a href="/courses"> COURSES</a>
+                <a href="/users"> USERS</a>
+                <a href="/homeworks"> HOMEWORKS</a>
+            </p>
         </footer>
     );
 }
