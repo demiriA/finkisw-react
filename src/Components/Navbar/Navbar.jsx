@@ -62,7 +62,7 @@ class Navbar extends Component{
                 <div className="dropdown-menu dropdown-menu-right dropdown-default"
                      aria-labelledby="navbarDropdownMenuLink-333">
                   <Link className="dropdown-item" to="#"><i className="fas fa-eye"/> Role</Link>
-                  <Link className="dropdown-item" to="#"><i className="fas fa-sign-out-alt"/> Sign out</Link>
+                  <Link className="dropdown-item" to="#" onClick={this.props.setLogout}><i className="fas fa-sign-out-alt"/> Sign out</Link>
                 </div>
               </li>
             </ul>

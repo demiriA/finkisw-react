@@ -1,0 +1,28 @@
+.bg-custom{
+    background: #d0d1d3 url("https://cas.finki.ukim.mk/cas/images/bg-body.jpg") repeat-x !important;
+    height: 100vh;
+}
+.login-container{
+    margin-top: 50px;
+    width: auto;
+    height: auto;
+    border-radius: 30px;
+    background: #ffffff;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,1);
+}
+.login-header{
+    position: center;
+    background: #d0d1d3 url("https://cas.finki.ukim.mk/cas/images/IO.png") no-repeat;
+    width: 100%;
+    height: 90px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+.login-logo{
+    background: #ffffff url("https://cas.finki.ukim.mk/cas/images/CASlogo.png") center no-repeat;
+    background-size: auto;
+    height: 188px;
+}
+.login-texts{
+    padding: 15px;
+}
