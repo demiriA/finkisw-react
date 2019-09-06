@@ -1,6 +1,45 @@
 import React, {Component} from "react";
 import './Login.css'
+import cookie from 'react-cookies'
+import axios from 'axios';
+
 class Login extends Component{
+
+    constructor(){
+        super();
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
+    onLogin(userCredentials){
+        axios.request({
+            url:`/oauth/token?grant_type=password&username=${userCredentials.username}&password=${userCredentials.password}`,
+            method: 'post',
+            baseURL: "http://localhost:3001/",
+            auth:{
+                username: "testjwtclientid",
+                password: "XY7kmzoNzl100"
+            },
+            data: {
+                "grant_type": "client_credentials",
+                "scope": "public"
+            }
+        })
+            .then(function (response) {
+                // console.log(response.data.access_token);
+                cookie.save("USER_SESSION",response.data.access_token);
+            });
+        this.props.history.push("/");
+    }
+
+    onSubmit(e){
+        const userCredentials = {
+            username: this.refs.username.value,
+            password: this.refs.password.value
+        };
+        this.onLogin(userCredentials);
+        e.preventDefault()
+    }
 
     render() {
         return (
@@ -9,17 +48,17 @@ class Login extends Component{
                 <div className="row">
                     <div className="col-md-8 m-auto">
                         <div className="login-container">
-                            <div className="login-header"></div>
+                            <div className="login-header"/>
                             <div className="row p-4">
-                                <div className="col-md-4 login-logo"></div>
+                                <div className="col-md-4 login-logo"/>
                                 <div className="form-group col-md-8 m-auto text-right">
                                     <h3>Central Authenticate Service (CAS)</h3>
-                                    <div>
+                                    <form onSubmit={this.onSubmit}>
                                         <input type="text" name="username" ref="username" placeholder="Username" className="form-control mb-2" />
                                         <input type="password" name="password" ref="password" placeholder="Password" className="form-control mb-2" />
                                         <input type="reset" value="Clear" className="btn btn-outline-secondary mb-2 mr-2"/>
-                                        <input type="submit" value="Login" className="btn btn-secondary mb-2" onClick={this.props.setLogin}/>
-                                    </div>
+                                        <input type="submit" value="Login" className="btn btn-secondary mb-2"/>
+                                    </form>
                                 </div>
                             </div>
                             <div className="login-texts">
