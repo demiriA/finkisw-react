@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, withRouter } from 'react-router-dom';
 import './App.css';
 import Navbar from '../Navbar/Navbar';
 import Footer from "../Footer/Footer";
@@ -18,74 +18,60 @@ import HomeworksTable from "../Homeworks/HomeworksTable";
 import HomeworksAddForm from "../Homeworks/HomeworksAddForm";
 import HomeworksEditForm from "../Homeworks/HomeworksEditForm";
 import Login from "../Users/Login";
+import cookie from 'react-cookies';
+import {createHashHistory } from 'history';
+import UserSettingsForm from "../Users/UserSettingsForm";
+import auth from '../../Auth/Auth';
+export const history = createHashHistory();
+
 
 class App extends Component{
 
-    constructor(props){
-        super(props);
-
-        this.state={
-            loggedIn: false
-        };
-
-        this.setLogin = this.setLogin.bind(this);
-        this.setLogout = this.setLogout.bind(this);
-    }
-
     componentDidMount() {
         this.checkLoggStatus();
+        console.log(auth.isAuthenticated());
     }
+
     checkLoggStatus(){
-        return this.state.loggedIn;
-    }
+        if(cookie.load('USER_SESSION') === undefined){
+            this.props.history.push("/login");
+        }
 
-    setLogin(){
-        this.setState({
-            loggedIn: true
-        })
-    }
-
-    setLogout(){
-        this.setState({
-            loggedIn: false
-        })
     }
 
     render() {
-            if(this.checkLoggStatus()){
-                return (
-                    <Router>
-                        <div className="container-fluid bg-dark">
-                            <Navbar setLogout={this.setLogout} />
+            return (
+                <BrowserRouter>
+                  <Switch>
+                      <Route exact path="/login" component={Login}/>
+                      <div className="container-fluid bg-dark">
+                          <Navbar />
+                      </div>
+                      <div className="container">
+                          <Route exact path="/" component={Home}/>
+                          <Route path="/help" component={Help}/>
+                          <Route path="/about" component={About}/>
+
+                          <Route path="/course/:id" component={CoursePreview}/>
+                          <Route exact path="/courses" component={CourseTable}/>
+                          <Route path="/courses/create" component={CourseAddForm}/>
+                          <Route path="/courses/edit/:id" component={CourseEditForm}/>
+
+                          <Route exact path="/settings" component={UserSettingsForm}/>
+                          <Route exact path="/users" component={UsersTable}/>
+                          <Route exact path="/users/create" component={UsersAddForm}/>
+                          <Route exact path="/users/edit/:id" component={UsersEditForm}/>
+
+                          <Route exacct path="/homework/:id" component={HomeworkPreview}/>
+                          <Route exact path="/homeworks" component={HomeworksTable}/>
+                          <Route path="/homeworks/create" component={HomeworksAddForm}/>
+                          <Route path="/homeworks/edit/:id" component={HomeworksEditForm}/>
+                          <Footer/>
                         </div>
-                        <div className="container">
-                            <Route exact path="/" component={Home}/>
-                            <Route path="/help" component={Help}/>
-                            <Route path="/about" component={About}/>
-
-                            <Route path="/course/:id" component={CoursePreview}/>
-                            <Route exact path="/courses" component={CourseTable}/>
-                            <Route path="/courses/create" component={CourseAddForm}/>
-                            <Route path="/courses/edit/:id" component={CourseEditForm}/>
-
-                            <Route exact path="/users" component={UsersTable}/>
-                            <Route exact path="/users/create" component={UsersAddForm}/>
-                            <Route exact path="/users/edit/:id" component={UsersEditForm}/>
-
-                            <Route exacct path="/homework/:id" component={HomeworkPreview}/>
-                            <Route exact path="/homeworks" component={HomeworksTable}/>
-                            <Route path="/homeworks/create" component={HomeworksAddForm}/>
-                            <Route path="/homeworks/edit/:id" component={HomeworksEditForm}/>
-                            <Footer/>
-                        </div>
-                    </Router>
-                )
-            } else {
-                return (
-                    <Login setLogin={this.setLogin}/>
-                )
-            }
+                    </Switch>
+                </BrowserRouter>
+            )
     }
 }
 
-export default App;
+export default withRouter(App);
