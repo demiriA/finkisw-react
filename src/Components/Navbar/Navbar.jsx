@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import cookie from "react-cookies";
 import axios from "axios";
+<<<<<<< HEAD
 import auth from '../../Auth/Auth';
+=======
+>>>>>>> 16c68824c88e72bfc3df4969102f630a1af6ad32
 
 class Navbar extends Component{
   constructor(){
