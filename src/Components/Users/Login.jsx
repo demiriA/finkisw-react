@@ -2,12 +2,15 @@ import React, {Component} from "react";
 import './Login.css'
 import cookie from 'react-cookies'
 import axios from 'axios';
+import auth from '../../Auth/Auth';
 
 class Login extends Component{
 
     constructor(){
         super();
-
+        this.state = {
+          error: false
+        }
         this.onSubmit = this.onSubmit.bind(this);
     }
 
@@ -29,7 +32,14 @@ class Login extends Component{
                 // console.log(response.data.access_token);
                 cookie.save("USER_SESSION",response.data.access_token);
             });
-        this.props.history.push("/");
+    }
+
+    onLoginTest(userCredentials){
+      console.log(userCredentials);
+      auth.login(() => {
+        console.log(auth.isAuthenticated());
+          this.props.history.push("/");
+      });
     }
 
     onSubmit(e){
@@ -37,12 +47,12 @@ class Login extends Component{
             username: this.refs.username.value,
             password: this.refs.password.value
         };
-        this.onLogin(userCredentials);
+        this.onLoginTest(userCredentials);
         e.preventDefault()
     }
 
     render() {
-        return (
+      return (
             <div className="container-fluid bg-custom">
             <div className="container">
                 <div className="row">
@@ -56,6 +66,9 @@ class Login extends Component{
                                     <form onSubmit={this.onSubmit}>
                                         <input type="text" name="username" ref="username" placeholder="Username" className="form-control mb-2" />
                                         <input type="password" name="password" ref="password" placeholder="Password" className="form-control mb-2" />
+                                        {
+                                          this.state.error ? (<div className="alert alert-danger" >Bad Credentials!</div>) : ""
+                                        }
                                         <input type="reset" value="Clear" className="btn btn-outline-secondary mb-2 mr-2"/>
                                         <input type="submit" value="Login" className="btn btn-secondary mb-2"/>
                                     </form>

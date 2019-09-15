@@ -2,10 +2,7 @@ import React, {Component} from 'react';
 import {Link, withRouter} from 'react-router-dom';
 import cookie from "react-cookies";
 import axios from "axios";
-<<<<<<< HEAD
 import auth from '../../Auth/Auth';
-=======
->>>>>>> 16c68824c88e72bfc3df4969102f630a1af6ad32
 
 class Navbar extends Component{
   constructor(){
@@ -49,8 +46,11 @@ class Navbar extends Component{
   }
 
   onLogout(){
+    auth.logout(() => {
+      console.log(auth.isAuthenticated());
+      this.props.history.push("/login");
+    })
     cookie.remove('USER_SESSION');
-    this.props.history.push("/login");
   }
 
   render(){
