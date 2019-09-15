@@ -12,34 +12,44 @@ class Login extends Component{
           error: false
         }
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    onLogin(userCredentials){
-        axios.request({
-            url:`/oauth/token?grant_type=password&username=${userCredentials.username}&password=${userCredentials.password}`,
-            method: 'post',
-            baseURL: "http://localhost:3001/",
-            auth:{
-                username: "testjwtclientid",
-                password: "XY7kmzoNzl100"
-            },
-            data: {
-                "grant_type": "client_credentials",
-                "scope": "public"
-            }
-        })
-            .then(function (response) {
-                // console.log(response.data.access_token);
-                cookie.save("USER_SESSION",response.data.access_token);
-            });
+        this.onLoginTest = this.onLoginTest.bind(this);
     }
 
     onLoginTest(userCredentials){
-      console.log(userCredentials);
-      auth.login(() => {
-        console.log(auth.isAuthenticated());
-          this.props.history.push("/");
-      });
+      var self = this;
+      axios.request({
+          url:`/oauth/token?grant_type=password&username=${userCredentials.username}&password=${userCredentials.password}`,
+          method: 'post',
+          baseURL: "http://192.168.0.103:3001/",
+          auth:{
+              username: "testjwtclientid",
+              password: "XY7kmzoNzl100"
+          },
+          data: {
+              "grant_type": "client_credentials",
+              "scope": "public"
+          }
+      })
+          .then(function (response) {
+              self.setState({
+                error: false
+              });
+              auth.login(() => {
+                console.log("loggedin");
+                cookie.save("USER_SESSION",response.data.access_token);
+                self.props.history.push("/");
+              });
+          })
+          .catch(function(err){
+            if(err.response !== undefined){
+              if(err.response.status === 400){
+                self.setState({
+                  error: true
+                })
+              }
+            }
+            console.log(err);
+          });
     }
 
     onSubmit(e){

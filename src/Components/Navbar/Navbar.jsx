@@ -9,7 +9,7 @@ class Navbar extends Component{
     super();
     this.state = {
       user: '',
-      roles: '',
+      role: '',
       courses:[
         {
           id: 1,
@@ -24,9 +24,7 @@ class Navbar extends Component{
   }
 
   componentDidMount(){
-    if(cookie.load("USER_SESSION") !== undefined){
-      this.userDetails();
-    }
+    this.userDetails();
   }
 
   userDetails(){
@@ -34,32 +32,29 @@ class Navbar extends Component{
     axios.request({
       url:`/api/current?access_token=${access_token}`,
       method: 'get',
-      baseURL: "http://localhost:3001/",
+      baseURL: "http://192.168.0.103:3001/",
     })
         .then( response => {
           this.setState({
             user: response.data,
-            roles: response.data.roles[0]
+            role: response.data.roles[0]
           })
         });
-    this.props.history.push("/");
   }
 
   onLogout(){
     auth.logout(() => {
-      console.log(auth.isAuthenticated());
+      cookie.remove('USER_SESSION');
       this.props.history.push("/login");
     })
-    cookie.remove('USER_SESSION');
   }
 
   render(){
-    if(window.location.pathname.match("/login")){
+    const roleName = this.state.role.roleName;
+    const user = this.state.user;
+    if(!auth.isAuthenticated()){
       return null;
     }
-    const roleName = this.state.roles.roleName;
-    const user = this.state.user;
-
     return (
         <nav className="container mb-1 navbar navbar-expand-lg navbar-dark bg-dark mb-4">
           <Link to="/" className="navbar-brand" href="#">FINKI SW</Link>

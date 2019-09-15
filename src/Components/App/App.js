@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route, withRouter } from 'react-router-dom';
 import './App.css';
 import Login from "../Users/Login";
 import ProtectedRoutes from "../ProtectedRoutes";
-// import cookie from 'react-cookies';
 import auth from '../../Auth/Auth';
 
 import {createHashHistory } from 'history';
@@ -16,7 +15,7 @@ class App extends Component{
         this.props.history.push("/login");
       }
     }
-    
+
     render() {
             return (
                 <BrowserRouter>
