@@ -12,6 +12,7 @@ class UsersTable extends Component{
         this.state = {
             users: []
         };
+        this.refresh = this.refresh.bind(this);
     }
 
     componentDidMount() {
@@ -23,7 +24,7 @@ class UsersTable extends Component{
         axios.request({
             url:`/api/users?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
         })
             .then( response => {
                 this.setState({
@@ -37,7 +38,7 @@ class UsersTable extends Component{
         axios.request({
             url:`/api/users/${userId}?access_token=${access_token}`,
             method: 'delete',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
         }).then( response => {
             this.setState({
                 users: [...this.state.users.filter( user => user.id !== userId)]
@@ -45,11 +46,16 @@ class UsersTable extends Component{
         });
     }
 
+    refresh(){
+      window.location.reload();
+    }
+
     render() {
         return (
             <div className="container">
                 <h3>Users</h3>
                 <Link to="/users/create" className="btn btn-outline-primary mb-2">Add new</Link>
+                <Link to="" className="float-right" onClick={this.refresh}>Refresh</Link>
                 <table className="table table-bordered table-striped">
                     <thead>
                         <tr>

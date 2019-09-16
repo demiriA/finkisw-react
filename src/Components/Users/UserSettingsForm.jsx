@@ -31,7 +31,7 @@ class UserSettingsForm extends Component{
         axios.request({
             url:`/api/current?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
         })
             .then( response =>{
                 this.setState({
@@ -62,7 +62,7 @@ class UserSettingsForm extends Component{
         axios.request({
             url:`/api/users/${this.state.id}?access_token=${access_token}`,
             method: 'put',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
             data: details
         })
             .then( response =>{

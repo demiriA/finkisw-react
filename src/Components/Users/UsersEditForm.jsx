@@ -32,7 +32,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/roles?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
         })
             .then( response =>{
                 this.setState({
@@ -47,7 +47,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/users/${userId}?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
         })
             .then( response =>{
                 // console.log("response",response.data);
@@ -80,7 +80,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/users/${this.state.id}?access_token=${access_token}`,
             method: 'put',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://192.168.0.103:3001/",
             data: details
         })
             .then( response =>{
