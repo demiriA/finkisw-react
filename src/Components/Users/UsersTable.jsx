@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import UsersTableItem from "./UsersTableItem";
 import cookie from 'react-cookies';
 import axios from 'axios';
-
+import language from "../../Resources/lang";
+import config from "../../Resources/Config";
 
 class UsersTable extends Component{
 
@@ -19,12 +20,18 @@ class UsersTable extends Component{
         this.getAllUsers();
     }
 
+    componentWillUnmount() {
+        this.setState({
+            users:[]
+        })
+    }
+
     getAllUsers(){
         let access_token = cookie.load("USER_SESSION");
         axios.request({
             url:`/api/users?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://192.168.0.103:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response => {
                 this.setState({
@@ -38,7 +45,7 @@ class UsersTable extends Component{
         axios.request({
             url:`/api/users/${userId}?access_token=${access_token}`,
             method: 'delete',
-            baseURL: "http://192.168.0.103:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         }).then( response => {
             this.setState({
                 users: [...this.state.users.filter( user => user.id !== userId)]
@@ -51,21 +58,25 @@ class UsersTable extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         return (
             <div className="container">
-                <h3>Users</h3>
-                <Link to="/users/create" className="btn btn-outline-primary mb-2">Add new</Link>
-                <Link to="" className="float-right" onClick={this.refresh}>Refresh</Link>
-                <table className="table table-bordered table-striped">
+                <h3>{lang.USERS}</h3>
+                <Link to="/users/create" className="btn btn-outline-primary mb-2">{lang.ADD_NEW}</Link>
+                <Link to="" className="float-right" onClick={this.refresh}>{lang.REFRESH}</Link>
+                <table className="table table-bordered table-striped" id="table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Username</th>
-                            <th>Name</th>
-                            <th>Surname</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Actions</th>
+                            <th>{lang.USERNAME}</th>
+                            <th>{lang.NAME}</th>
+                            <th>{lang.SURNAME}</th>
+                            <th>{lang.EMAIL}</th>
+                            <th>{lang.ROLE}</th>
+                            <th>{lang.ACTIONS}</th>
                         </tr>
                     </thead>
                     <tbody>

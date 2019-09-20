@@ -5,6 +5,7 @@ import UserDetails from '../Dashboard/UserDetails';
 import CourseDetails from '../Dashboard/CourseDetails';
 import cookie from "react-cookies";
 import axios from "axios";
+import language from "../../Resources/lang";
 class MyCourses extends Component{
     constructor(){
         super();
@@ -42,10 +43,14 @@ class MyCourses extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         if(this.state.role === "ADMIN_USER"){
             return (
                 <div className="container-fluid">
-                    <h2>Admin dashoard<hr/></h2>
+                    <h2>{lang.ADMIN_DASHBOARD}<hr/></h2>
                     <div className="row">
                       <UserDetails />
                       <CourseDetails />
@@ -55,7 +60,7 @@ class MyCourses extends Component{
         } else {
             return (
                 <React.Fragment>
-                    <h2><i className="fas fa-tasks"/> My Courses</h2>
+                    <h2><i className="fas fa-tasks"/> {lang.MY_COURSES}</h2>
                     <hr/>
                     <div className="row">
                         {

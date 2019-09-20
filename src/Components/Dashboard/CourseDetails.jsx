@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import language from '../../Resources/lang';
+import config from "../../Resources/Config";
 
 class CourseDetails extends Component{
 
@@ -20,7 +22,7 @@ class CourseDetails extends Component{
         axios.request({
             url:`/api/users?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://192.168.0.103:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response => {
               this.setState({
@@ -32,26 +34,30 @@ class CourseDetails extends Component{
     }
 
     render(){
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
       return (
         <div className="col-md-6 mt-3">
           <div className="card">
             <div className="card-header">
-                <h3>Courses details</h3>
+                <h3>{lang.COURSES_DETAILS}</h3>
             </div>
             <div className="card-body overflow-auto usr-dtls">
               <dl>
-                <dt>Course name</dt>
+                <dt>Course name 1</dt>
                   <dd>Teacher One</dd>
                   <dd>Teacher Two</dd>
-                <dt>Course name</dt>
+                <dt>Course name 2</dt>
                   <dd>Teacher Two</dd>
-                <dt>Course name</dt>
+                <dt>Course name 3</dt>
                   <dd>Teacher Two</dd>
                   <dd>Teacher One</dd>
               </dl>
             </div>
             <div className="card-footer">
-              <p>Total courses: {"3"}</p>
+              <p>{lang.TOTAL_COURSES}: {"3"}</p>
             </div>
           </div>
         </div>

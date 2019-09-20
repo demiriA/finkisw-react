@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import cookie from 'react-cookies';
 import axios from 'axios';
+import language from '../../Resources/lang';
+import config from "../../Resources/Config";
 
 class UserDetails extends Component{
 
@@ -20,7 +22,7 @@ class UserDetails extends Component{
         axios.request({
             url:`/api/users?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://192.168.0.103:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response => {
               this.setState({
@@ -32,31 +34,38 @@ class UserDetails extends Component{
     }
 
     render(){
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
       let teachers = 0;
       return (
         <div className="col-md-6 mt-3">
           <div className="card">
             <div className="card-header">
-                <h3>Users details</h3>
+                <h3>{lang.USERS_DETAILS}</h3>
             </div>
             <div className="card-body overflow-auto usr-dtls">
               <dl>
-                <dt>Administrators:</dt>
+                <dt>{lang.ADMINS}:</dt>
                   {this.state.users.map( user => {
                       if(user.roles[0].roleName === "ADMIN_USER"){
-                        return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }})
+                        return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }
+                        return null;
+                  })
                   }
-                <dt>Teachers:</dt>
-                <dd key={"2222"} className="list-group-item">Example Exam</dd>
+                <dt>{lang.TEACHERS}:</dt>
                   {this.state.users.map( user => {
                       if(user.roles[0].roleName === "TEACHER_USER"){
                         teachers++;
-                        return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }})
+                        return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }
+                        return null;
+                  })
                   }
               </dl>
             </div>
             <div className="card-footer">
-              <p>Total users: {this.state.users.length}, Teachers: {teachers}</p>
+              <p>{lang.TOTAL_USERS}: {this.state.users.length}, {lang.TEACHERS}: {teachers}</p>
             </div>
           </div>
         </div>
