@@ -2,34 +2,54 @@ import React, {Component} from "react";
 import './Login.css'
 import cookie from 'react-cookies'
 import axios from 'axios';
+import auth from '../../Auth/Auth';
+import config from "../../Resources/Config";
 
 class Login extends Component{
 
     constructor(){
         super();
-
+        this.state = {
+          error: false
+        }
         this.onSubmit = this.onSubmit.bind(this);
+        this.onLoginTest = this.onLoginTest.bind(this);
     }
 
-    onLogin(userCredentials){
-        axios.request({
-            url:`/oauth/token?grant_type=password&username=${userCredentials.username}&password=${userCredentials.password}`,
-            method: 'post',
-            baseURL: "http://localhost:3001/",
-            auth:{
-                username: "testjwtclientid",
-                password: "XY7kmzoNzl100"
-            },
-            data: {
-                "grant_type": "client_credentials",
-                "scope": "public"
-            }
-        })
-            .then(function (response) {
-                // console.log(response.data.access_token);
+    onLoginTest(userCredentials){
+      var self = this;
+      axios.request({
+          url:`/oauth/token?grant_type=password&username=${userCredentials.username}&password=${userCredentials.password}`,
+          method: 'post',
+          baseURL: "http://"+config.ipAddress+":"+config.port+"/",
+          auth:{
+              username: "testjwtclientid",
+              password: "XY7kmzoNzl100"
+          },
+          data: {
+              "grant_type": "client_credentials",
+              "scope": "public"
+          }
+      })
+          .then(function (response) {
+              self.setState({
+                error: false
+              });
+              auth.login(() => {
                 cookie.save("USER_SESSION",response.data.access_token);
-            });
-        this.props.history.push("/");
+                self.props.history.push("/");
+              });
+          })
+          .catch(function(err){
+            if(err.response !== undefined){
+              if(err.response.status === 400){
+                self.setState({
+                  error: true
+                })
+              }
+            }
+            console.log(err);
+          });
     }
 
     onSubmit(e){
@@ -37,12 +57,12 @@ class Login extends Component{
             username: this.refs.username.value,
             password: this.refs.password.value
         };
-        this.onLogin(userCredentials);
+        this.onLoginTest(userCredentials);
         e.preventDefault()
     }
 
     render() {
-        return (
+      return (
             <div className="container-fluid bg-custom">
             <div className="container">
                 <div className="row">
@@ -56,6 +76,9 @@ class Login extends Component{
                                     <form onSubmit={this.onSubmit}>
                                         <input type="text" name="username" ref="username" placeholder="Username" className="form-control mb-2" />
                                         <input type="password" name="password" ref="password" placeholder="Password" className="form-control mb-2" />
+                                        {
+                                          this.state.error ? (<div className="alert alert-danger" >Bad Credentials!</div>) : ""
+                                        }
                                         <input type="reset" value="Clear" className="btn btn-outline-secondary mb-2 mr-2"/>
                                         <input type="submit" value="Login" className="btn btn-secondary mb-2"/>
                                     </form>

@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import { Link } from 'react-router-dom';
 import cookie from "react-cookies";
 import axios from "axios";
+import language from "../../Resources/lang";
+import config from "../../Resources/Config";
 
 class UsersAddForm extends Component{
 
@@ -29,7 +31,7 @@ class UsersAddForm extends Component{
         axios.request({
             url:`/api/roles?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response =>{
                 this.setState({
@@ -43,14 +45,14 @@ class UsersAddForm extends Component{
         axios.request({
             url:`/api/users?access_token=${access_token}`,
             method: 'post',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
             data: userDetails
         })
             .then( response =>{
+                this.props.history.push("/users");
                 // console.log(response);
             })
             .catch(err => console.log(err));
-        this.props.history.push("/users");
     }
 
     onChange(e){
@@ -83,14 +85,18 @@ class UsersAddForm extends Component{
 
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h3>Add a user</h3>
+                <h3>{lang.ADD_A_USER}</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" name="username" ref="username" placeholder="Username" className="form-control mb-2" required="required" value={this.state.username} onChange={this.onChange} />
-                    <input type="text" name="name" ref="name" placeholder="Name" className="form-control mb-2" required="required" value={this.state.name} onChange={this.onChange} />
-                    <input type="text" name="surname" ref="surname" placeholder="Surname" className="form-control mb-2" required="required" value={this.state.surname} onChange={this.onChange} />
-                    <input type="email" name="email" ref="email" placeholder="Email" className="form-control mb-2" required="required" value={this.state.email} onChange={this.onChange} />
+                    <input type="text" name="username" ref="username" placeholder={lang.USERNAME} className="form-control mb-2" required="required" value={this.state.username} onChange={this.onChange} />
+                    <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" required="required" value={this.state.name} onChange={this.onChange} />
+                    <input type="text" name="surname" ref="surname" placeholder={lang.SURNAME} className="form-control mb-2" required="required" value={this.state.surname} onChange={this.onChange} />
+                    <input type="email" name="email" ref="email" placeholder={lang.EMAIL} className="form-control mb-2" required="required" value={this.state.email} onChange={this.onChange} />
                     <select className="form-control mb-2" name="role" ref="role" required="required" value={this.state.role} onChange={this.onChange} >
                         {
                             this.state.roles.map( (role) => (
@@ -98,9 +104,9 @@ class UsersAddForm extends Component{
                             ))
                         }
                     </select>
-                    <input type="submit" value="Add" className="btn btn-outline-primary mb-2"/>
+                    <input type="submit" value={lang.ADD} className="btn btn-outline-primary mb-2"/>
                 </form>
-                <p><Link to="/users">Back to list</Link></p>
+                <p><Link to="/users">{lang.BACK_TO_LIST}</Link></p>
             </div>
         );
     }

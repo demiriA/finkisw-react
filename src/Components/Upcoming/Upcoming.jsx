@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import UpcomingItem from "./UpcomingItem";
 import cookie from "react-cookies";
 import axios from "axios";
+import language from "../../Resources/lang";
+import config from '../../Resources/Config';
 
 class Upcoming extends Component{
     constructor(){
@@ -34,7 +36,7 @@ class Upcoming extends Component{
         axios.request({
             url:`/api/current?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response => {
                 this.setState({
@@ -44,12 +46,16 @@ class Upcoming extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         if(this.state.role !== "STUDENT_USER"){
             return null;
         } else{
             return(
                 <div className="alert alert-secondary">
-                    <h2><i className="fas fa-file-upload"/> Upcoming uploads</h2>
+                    <h2><i className="fas fa-file-upload"/> {lang.UPCOMING_UPLOADS}</h2>
                     <hr/>
                     <div className="row">
                         {

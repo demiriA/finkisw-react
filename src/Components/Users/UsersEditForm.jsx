@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import axios from 'axios';
 import cookie from 'react-cookies';
+import language from "../../Resources/lang";
+import config from "../../Resources/Config";
 
 
 class UsersEditForm extends Component{
@@ -32,7 +34,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/roles?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response =>{
                 this.setState({
@@ -47,7 +49,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/users/${userId}?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response =>{
                 // console.log("response",response.data);
@@ -80,7 +82,7 @@ class UsersEditForm extends Component{
         axios.request({
             url:`/api/users/${this.state.id}?access_token=${access_token}`,
             method: 'put',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
             data: details
         })
             .then( response =>{
@@ -110,12 +112,16 @@ class UsersEditForm extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h3>Edit {this.state.username}</h3>
+                <h3>{lang.EDIT} {this.state.username}</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" name="name" ref="name" placeholder="Name" className="form-control mb-2" value={this.state.name} onChange={this.onChange} required="required"/>
-                    <input type="text" name="surname" ref="surname" placeholder="Surname" className="form-control mb-2" value={this.state.surname} onChange={this.onChange} required="required"/>
+                    <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" value={this.state.name} onChange={this.onChange} required="required"/>
+                    <input type="text" name="surname" ref="surname" placeholder={lang.SURNAME} className="form-control mb-2" value={this.state.surname} onChange={this.onChange} required="required"/>
                     <select className="form-control mb-2" name="role" ref="role" value={this.state.role} onChange={this.onChange} required="required" >
                         {
                             this.state.roles.map( (role) => (
@@ -123,9 +129,9 @@ class UsersEditForm extends Component{
                             ))
                         }
                     </select>
-                    <input type="submit" value="Update" className="btn btn-outline-primary mb-2"/>
+                    <input type="submit" value={lang.UPDATE} className="btn btn-outline-primary mb-2"/>
                 </form>
-                <p><Link to="/users">Back to list</Link></p>
+                <p><Link to="/users">{lang.BACK_TO_LIST}</Link></p>
             </div>
         );
     }

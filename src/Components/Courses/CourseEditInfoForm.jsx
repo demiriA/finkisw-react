@@ -1,26 +1,27 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
+import CKEditor from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import cookie from 'react-cookies';
+import axios from 'axios';
 import language from "../../Resources/lang";
-import cookie from "react-cookies";
-import axios from "axios";
 import config from "../../Resources/Config";
 
-class CourseEditForm extends Component{
+class CourseEditInfoForm extends Component{
 
     constructor(){
         super();
         this.state = {
             id:'',
-            name: '',
-            year: ''
+            info:''
         };
-        this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
         this.getCourse();
     }
+
 
     getCourse(){
         let access_token = cookie.load("USER_SESSION");
@@ -30,26 +31,25 @@ class CourseEditForm extends Component{
             method: 'get',
             baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         }).then( response => {
+            // console.log(response.data);
             this.setState({
                 id: response.data.id,
-                name: response.data.name,
-                year: response.data.studyYear
+                info: response.data.info
             });
         });
     }
 
-    editCourse(courseDetails){
-        // console.log(courseDetails);
+    editInfo(info){
+        // console.log(info);
         let access_token = cookie.load("USER_SESSION");
         axios.request({
-            url:`/api/courses/${this.state.id}?access_token=${access_token}`,
+            url:`/api/courses/info/${this.state.id}?access_token=${access_token}`,
             method: 'put',
             baseURL: "http://"+config.ipAddress+":"+config.port+"/",
-            data: courseDetails,
-            headers: {'Content-type': 'application/json; charset=utf-8'}
+            data: info
         }).then( response => {
-            this.props.history.push("/courses");
-            // console.log(response);
+            this.props.history.push("/");
+           // console.log(response);
         })
             .catch(err =>{
                 console.log(err);
@@ -57,25 +57,14 @@ class CourseEditForm extends Component{
     }
 
     onSubmit(e){
-        const course = {
+        const info = {
             id: this.state.id,
-            name: this.state.name,
-            studyYear: this.state.year
+            info: this.state.info
         };
-        this.editCourse(course);
+        this.editInfo(info);
         e.preventDefault();
     }
 
-    onChange(e){
-        const target = e.target;
-        const value = target.value;
-        const name = target.name;
-
-        this.setState({
-            [name]:value
-        });
-        e.preventDefault();
-    }
     render() {
         let lang = language.en;
         if(localStorage.getItem("lang") === "mk"){
@@ -83,10 +72,24 @@ class CourseEditForm extends Component{
         }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h3>{lang.EDIT} {this.state.name}</h3>
+                <h3>{lang.EDIT_INFO}</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" value={this.state.name} onChange={this.onChange}/>
-                    <input type="text" name="year" ref="year" placeholder={lang.STUDY_YEAR} className="form-control mb-2" value={this.state.year} onChange={this.onChange}/>
+                    <CKEditor
+                        editor={ ClassicEditor }
+                        data={this.state.info ? this.state.info : ""}
+                        onInit={ editor => {
+                            // You can store the "editor" and use when it is needed.
+                            // console.log( 'Editor is ready to use!', editor );
+                        } }
+                        onChange={ ( event, editor ) => {
+                            const data = editor.getData();
+                            this.setState({
+                                info:data
+                            });
+                            // console.log(data);
+                        } }
+                    />
+                    <br/>
                     <input type="submit" value={lang.UPDATE} className="btn btn-outline-primary mb-2"/>
                 </form>
                 <p><Link to="/courses">{lang.BACK_TO_LIST}</Link></p>
@@ -94,4 +97,4 @@ class CourseEditForm extends Component{
         );
     }
 }
-export default CourseEditForm;
+export default CourseEditInfoForm;

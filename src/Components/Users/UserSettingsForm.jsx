@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import axios from 'axios';
 import cookie from 'react-cookies';
+import language from "../../Resources/lang";
+import config from '../../Resources/Config';
 
 
 class UserSettingsForm extends Component{
@@ -31,7 +33,7 @@ class UserSettingsForm extends Component{
         axios.request({
             url:`/api/current?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response =>{
                 this.setState({
@@ -62,7 +64,7 @@ class UserSettingsForm extends Component{
         axios.request({
             url:`/api/users/${this.state.id}?access_token=${access_token}`,
             method: 'put',
-            baseURL: "http://localhost:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
             data: details
         })
             .then( response =>{
@@ -110,20 +112,24 @@ class UserSettingsForm extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h2>Settings<hr/></h2>
-                <h3>Welcome, {this.state.username}</h3>
+                <h2>{lang.SETTINGS}<hr/></h2>
+                <h3>{lang.WELCOME}, {this.state.username}</h3>
                 {
-                    this.state.alertSuccess ? (<div className="alert alert-success">Profile updated!</div>) : ""
+                    this.state.alertSuccess ? (<div className="alert alert-success">{lang.PROFILE_UPDATED}</div>) : ""
                 }
 
                 <form onSubmit={this.onSubmit}>
-                    <input type="email" name="email" ref="email" placeholder="Email" className="form-control mb-2" value={this.state.email} onChange={this.onChange} required="required" />
-                    <small className="text-danger">For security reasons current password is not displayed!</small>
-                    <input type="password" name="password" ref="password" placeholder="New password" className="form-control mb-2" value={this.state.password} onChange={this.onChange} />
-                    <input type="password" name="newpassword" ref="newpassword" placeholder="Confirm new password" className="form-control mb-2" value={this.state.newpassword} onChange={this.onChange} />
-                    <input type="submit" value="Update" className="btn btn-outline-primary mb-2"/>
+                    <input type="email" name="email" ref="email" placeholder={lang.EMAIL} className="form-control mb-2" value={this.state.email} onChange={this.onChange} required="required" />
+                    <small className="text-danger">{lang.SECURITY_REASONS_PASSWORD}</small>
+                    <input type="password" name="password" ref="password" placeholder={lang.NEW_PASSWORD} className="form-control mb-2" value={this.state.password} onChange={this.onChange} />
+                    <input type="password" name="newpassword" ref="newpassword" placeholder={lang.CONFIRM_PASSWORD} className="form-control mb-2" value={this.state.newpassword} onChange={this.onChange} />
+                    <input type="submit" value={lang.UPDATE} className="btn btn-outline-primary mb-2"/>
                 </form>
             </div>
         );
