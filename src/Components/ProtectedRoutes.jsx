@@ -19,6 +19,7 @@ import HomeworksAddForm from "./Homeworks/HomeworksAddForm";
 import HomeworksEditForm from "./Homeworks/HomeworksEditForm";
 import UserSettingsForm from "./Users/UserSettingsForm";
 import auth from '../Auth/Auth';
+import CourseEditInfoForm from "./Courses/CourseEditInfoForm";
 
 function ProtectedRoutes (props){
 
@@ -40,6 +41,7 @@ function ProtectedRoutes (props){
               <Route exact path="/courses" component={CourseTable}/>
               <Route path="/courses/create" component={CourseAddForm}/>
               <Route path="/courses/edit/:id" component={CourseEditForm}/>
+              <Route path="/courses/editInfo/:id" component={CourseEditInfoForm}/>
 
               <Route exact path="/settings" component={UserSettingsForm}/>
               <Route exact path="/users" component={UsersTable}/>

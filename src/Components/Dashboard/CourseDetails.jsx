@@ -28,8 +28,6 @@ class CourseDetails extends Component{
               this.setState({
                 users: response.data
               });
-              let users = response.data;
-                console.log(users[0].roles[0].roleName);
             });
     }
 

@@ -11,21 +11,30 @@ class Navbar extends Component{
     this.state = {
       user: '',
       role: '',
-      courses:[
-        {
-          id: 1,
-          name: "Course 1"
-        },
-        {
-          id: 2,
-          name: "Course 2"
-        }
-      ]
+      courses:[]
     };
   }
 
   componentDidMount(){
     this.userDetails();
+    this.getAllCourses();
+  }
+
+  getAllCourses(){
+    let access_token = cookie.load("USER_SESSION");
+    axios.request({
+      url:`/api/courses?access_token=${access_token}`,
+      method: 'get',
+      baseURL: "http://"+config.ipAddress+":"+config.port+"/"
+    })
+        .then( response => {
+          this.setState({
+            courses: response.data
+          });
+        })
+        .catch( err =>{
+          console.log(err);
+        });
   }
 
   userDetails(){
@@ -97,20 +106,23 @@ class Navbar extends Component{
                 <Link to={"#"} className="nav-link dropdown-toggle text-light" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                   <i className="fas fa-th"/> {
-                  roleName === "ADMIN_USER" ? <font>{lang.ACTIONS}</font> : (roleName === "TEACHER_USER" ? <font>{lang.HOMEWORK}</font> : <font>{lang.COURSES}</font>)
+                  roleName === "ADMIN_USER" ? <font>{lang.ACTIONS}</font> : (roleName === "TEACHER_USER" ? <font>{lang.ACTIONS}</font> : <font>{lang.COURSES}</font>)
                 }
                 </Link>
                 <div className="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
                   {
                     roleName === "ADMIN_USER" ? (
                             <React.Fragment>
-                            <Link className="dropdown-item" to="/users"><i className="fas fa-angle-right"/> {lang.USERS}</Link>
+                              <Link className="dropdown-item" to="/users"><i className="fas fa-angle-right"/> {lang.USERS}</Link>
                               <Link className="dropdown-item" to="/courses"><i className="fas fa-angle-right"/> {lang.COURSES}</Link>
                             </React.Fragment>
                     ) :
                         roleName === "TEACHER_USER" ?
                         (
-                            <Link className="dropdown-item" to="/homeworks"><i className="fas fa-angle-right"/> {lang.HOMEWORK}</Link>
+                            <React.Fragment>
+                              <Link className="dropdown-item" to="/courses"><i className="fas fa-angle-right"/> {lang.COURSES}</Link>
+                              <Link className="dropdown-item" to="/homeworks"><i className="fas fa-angle-right"/> {lang.HOMEWORK}</Link>
+                            </React.Fragment>
                         )
                             :
                             (
