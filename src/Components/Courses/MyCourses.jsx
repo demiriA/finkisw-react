@@ -7,6 +7,7 @@ import cookie from "react-cookies";
 import axios from "axios";
 import language from "../../Resources/lang";
 import config from "../../Resources/Config";
+
 class MyCourses extends Component{
     constructor(){
         super();

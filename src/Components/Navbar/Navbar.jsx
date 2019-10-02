@@ -123,7 +123,6 @@ class Navbar extends Component{
                               <Link className="dropdown-item" to="/courses"><i className="fas fa-angle-right"/> {lang.COURSES}</Link>
                               <Link className="dropdown-item" to="/homeworks"><i className="fas fa-angle-right"/> {lang.HOMEWORK}</Link>
                             </React.Fragment>
-
                         )
                             :
                             (

@@ -47,6 +47,8 @@
     "EDIT_TEACHERS": "Edit Teachers",
     "EDIT_INFO": "Edit info",
     "CREATE": "Create"
+    "EMAIL": "Email"
+
   },
   "mk": {
     "ADMIN": "Администратор",
@@ -96,5 +98,6 @@
     "EDIT_TEACHERS": "Измени Професори",
     "EDIT_INFO": "Измени инфо",
     "CREATE": "Креирај"
+    "EMAIL": "Е-пошта"
   }
 }
