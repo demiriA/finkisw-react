@@ -20,6 +20,7 @@ class MyCourses extends Component{
 
     componentDidMount() {
         this.getUser();
+        this.getAllCourses();
     }
 
     getUser(){
@@ -44,6 +45,23 @@ class MyCourses extends Component{
         let username = this.state.username;
         axios.request({
             url:`/api/courses/${type}/${username}?access_token=${access_token}`,
+            method: 'get',
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/"
+        })
+            .then( response => {
+                this.setState({
+                    courses: response.data
+                });
+            })
+            .catch( err =>{
+                console.log(err);
+            });
+    }
+
+    getAllCourses(){
+        let access_token = cookie.load("USER_SESSION");
+        axios.request({
+            url:`/api/courses?access_token=${access_token}`,
             method: 'get',
             baseURL: "http://"+config.ipAddress+":"+config.port+"/"
         })

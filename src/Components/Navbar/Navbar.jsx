@@ -17,6 +17,24 @@ class Navbar extends Component{
 
   componentDidMount(){
     this.userDetails();
+    this.getAllCourses();
+  }
+
+  getAllCourses(){
+    let access_token = cookie.load("USER_SESSION");
+    axios.request({
+      url:`/api/courses?access_token=${access_token}`,
+      method: 'get',
+      baseURL: "http://"+config.ipAddress+":"+config.port+"/"
+    })
+        .then( response => {
+          this.setState({
+            courses: response.data
+          });
+        })
+        .catch( err =>{
+          console.log(err);
+        });
   }
 
   getAllCourses(){

@@ -47,7 +47,6 @@
     "EDIT_STUDENTS": "Edit Students",
     "EDIT_TEACHERS": "Edit Teachers",
     "EDIT_INFO": "Edit info",
-<<<<<<< HEAD
     "EDIT_USERS": "Edit users",
     "CREATE": "Create",
     "SEMINAR_WORK": "Seminar work",
@@ -57,11 +56,6 @@
     "STUDENTS": "Students",
     "CURRENT": "Current",
     "ALL": "All"
-=======
-    "CREATE": "Create"
-    "EMAIL": "Email"
-
->>>>>>> ebbd07149afa40761cf484d44013c4806852be02
   },
   "mk": {
     "ADMIN": "Администратор",
@@ -111,7 +105,6 @@
     "EDIT_STUDENTS": "Измени Студенти",
     "EDIT_TEACHERS": "Измени Професори",
     "EDIT_INFO": "Измени инфо",
-<<<<<<< HEAD
     "EDIT_USERS": "Измени корисници",
     "CREATE": "Креирај",
     "SEMINAR_WORK": "Семинарска работа",
@@ -121,9 +114,5 @@
     "STUDENTS": "Студенти",
     "CURRENT": "Моментални",
     "ALL": "Сите"
-=======
-    "CREATE": "Креирај"
-    "EMAIL": "Е-пошта"
->>>>>>> ebbd07149afa40761cf484d44013c4806852be02
   }
 }
