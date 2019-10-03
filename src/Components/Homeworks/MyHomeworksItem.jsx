@@ -1,9 +1,14 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
+import language from "../../Resources/lang";
 
 class MyHomeworksItem extends Component{
     render() {
 
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         const { name, expire, posted, teacher, instruction } = this.props.homework;
 
         return(
@@ -24,7 +29,7 @@ class MyHomeworksItem extends Component{
                         </p>
                     </div>
                 </div>
-                <Link className="btn btn-dark btn-lg" to="/homework/1">Upload your file</Link>
+                <Link className="btn btn-dark btn-lg" to="/homework/1">{lang.APPLY}</Link>
             </div>
         );
     }

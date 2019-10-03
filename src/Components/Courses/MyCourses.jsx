@@ -6,21 +6,15 @@ import CourseDetails from '../Dashboard/CourseDetails';
 import cookie from "react-cookies";
 import axios from "axios";
 import language from "../../Resources/lang";
+import config from "../../Resources/Config";
+
 class MyCourses extends Component{
     constructor(){
         super();
         this.state = {
+            username: '',
             role: '',
-            courses:[
-                {
-                    id: 1,
-                    name: "Course 1"
-                },
-                {
-                    id: 2,
-                    name: "Course 2"
-                }
-            ]
+            courses:[]
         }
     }
 
@@ -33,12 +27,33 @@ class MyCourses extends Component{
         axios.request({
             url:`/api/current?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://192.168.0.103:3001/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response => {
                 this.setState({
+                    username: response.data.username,
                     role: response.data.roles[0].roleName
                 });
+                this.getAllCourses();
+            });
+    }
+
+    getAllCourses(){
+        let access_token = cookie.load("USER_SESSION");
+        let type = this.state.role === "TEACHER_USER" ? "t" : "s";
+        let username = this.state.username;
+        axios.request({
+            url:`/api/courses/${type}/${username}?access_token=${access_token}`,
+            method: 'get',
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/"
+        })
+            .then( response => {
+                this.setState({
+                    courses: response.data
+                });
+            })
+            .catch( err =>{
+                console.log(err);
             });
     }
 

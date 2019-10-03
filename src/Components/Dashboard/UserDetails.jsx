@@ -28,8 +28,6 @@ class UserDetails extends Component{
               this.setState({
                 users: response.data
               });
-              let users = response.data;
-                console.log(users[0].roles[0].roleName);
             });
     }
 
@@ -39,6 +37,8 @@ class UserDetails extends Component{
             lang = language.mk;
         }
       let teachers = 0;
+      let admins = 0;
+
       return (
         <div className="col-md-6 mt-3">
           <div className="card">
@@ -50,6 +50,7 @@ class UserDetails extends Component{
                 <dt>{lang.ADMINS}:</dt>
                   {this.state.users.map( user => {
                       if(user.roles[0].roleName === "ADMIN_USER"){
+                          admins++;
                         return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }
                         return null;
                   })
@@ -57,7 +58,7 @@ class UserDetails extends Component{
                 <dt>{lang.TEACHERS}:</dt>
                   {this.state.users.map( user => {
                       if(user.roles[0].roleName === "TEACHER_USER"){
-                        teachers++;
+                          teachers++;
                         return <dd key={user.id} className="list-group-item">{user.firstName} {user.lastName}</dd> }
                         return null;
                   })
@@ -65,7 +66,7 @@ class UserDetails extends Component{
               </dl>
             </div>
             <div className="card-footer">
-              <p>{lang.TOTAL_USERS}: {this.state.users.length}, {lang.TEACHERS}: {teachers}</p>
+                <p>{lang.TOTAL_USERS}: {this.state.users.length}, <b>{lang.TEACHERS}:</b> {teachers}, <b>{lang.STUDENTS}:</b> {this.state.users.length - admins - teachers}</p>
             </div>
           </div>
         </div>

@@ -9,7 +9,7 @@ class CourseDetails extends Component{
     constructor(props){
       super(props);
       this.state = {
-        users: []
+        courses: []
       }
     }
 
@@ -20,16 +20,17 @@ class CourseDetails extends Component{
     getAllUsers(){
         let access_token = cookie.load("USER_SESSION");
         axios.request({
-            url:`/api/users?access_token=${access_token}`,
+            url:`/api/courses?access_token=${access_token}`,
             method: 'get',
-            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/"
         })
             .then( response => {
-              this.setState({
-                users: response.data
-              });
-              let users = response.data;
-                console.log(users[0].roles[0].roleName);
+                this.setState({
+                    courses: response.data
+                });
+            })
+            .catch( err =>{
+                console.log(err);
             });
     }
 
@@ -46,18 +47,22 @@ class CourseDetails extends Component{
             </div>
             <div className="card-body overflow-auto usr-dtls">
               <dl>
-                <dt>Course name 1</dt>
-                  <dd>Teacher One</dd>
-                  <dd>Teacher Two</dd>
-                <dt>Course name 2</dt>
-                  <dd>Teacher Two</dd>
-                <dt>Course name 3</dt>
-                  <dd>Teacher Two</dd>
-                  <dd>Teacher One</dd>
+                  {
+                      this.state.courses.map( (course) =>(
+                          <React.Fragment key={course.id}>
+                              <dt>{course.name}</dt>
+                              {
+                                  course.teachers.map( (teacher) => (
+                                      <dd key={teacher.id}>{teacher.username} | {teacher.firstName} {teacher.lastName}</dd>
+                                  ))
+                              }
+                          </React.Fragment>
+                      ))
+                  }
               </dl>
             </div>
             <div className="card-footer">
-              <p>{lang.TOTAL_COURSES}: {"3"}</p>
+              <p>{lang.TOTAL_COURSES}: {this.state.courses.length}</p>
             </div>
           </div>
         </div>

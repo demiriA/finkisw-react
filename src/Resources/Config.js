@@ -1,6 +1,6 @@
 class Config {
     constructor(){
-       this.ipAddress = "192.168.0.103";
+       this.ipAddress = "localhost";
        this.port = "3001";
     }
 

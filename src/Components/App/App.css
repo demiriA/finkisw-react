@@ -15,5 +15,6 @@ body{
   background: white !important;
 }
 .usr-dtls{
-  max-height: 200px;
+  min-height: 450px;
+  max-height: 450px;
 }

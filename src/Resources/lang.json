@@ -7,6 +7,8 @@
     "STUDENT": "Student",
     "HELP": "Help",
     "ABOUT": "About",
+    "INFO": "Info",
+    "BACK": "Back",
     "LANGUAGE": "Language",
     "ACTIONS": "Actions",
     "USERS": "Users",
@@ -26,6 +28,7 @@
     "SETTINGS": "Settings",
     "WELCOME": "Welcome",
     "TOTAL_USERS": "Total users",
+    "TOTAL_COURSES": "Total courses",
     "MY_COURSES": "My Courses",
     "UPCOMING_UPLOADS": "Upcoming uploads",
     "SECURITY_REASONS_PASSWORD": "For security reasons current password is not displayed!",
@@ -37,7 +40,28 @@
     "SURNAME": "Surname",
     "ROLE": "Role",
     "USERNAME": "Username",
+    "EMAIL": "Email",
+    "CREATE_NEW": "Create new",
+    "COURSE_NAME": "Course name",
+    "STUDY_YEAR": "Study year",
+    "EDIT_STUDENTS": "Edit Students",
+    "EDIT_TEACHERS": "Edit Teachers",
+    "EDIT_INFO": "Edit info",
+<<<<<<< HEAD
+    "EDIT_USERS": "Edit users",
+    "CREATE": "Create",
+    "SEMINAR_WORK": "Seminar work",
+    "APPLY": "Apply",
+    "SAVE": "Save",
+    "TOTAL": "Total",
+    "STUDENTS": "Students",
+    "CURRENT": "Current",
+    "ALL": "All"
+=======
+    "CREATE": "Create"
     "EMAIL": "Email"
+
+>>>>>>> ebbd07149afa40761cf484d44013c4806852be02
   },
   "mk": {
     "ADMIN": "Администратор",
@@ -47,6 +71,8 @@
     "STUDENT": "Студент",
     "HELP": "Помош",
     "ABOUT": "За",
+    "INFO": "Инфо",
+    "BACK": "Назад",
     "LANGUAGE": "Јазик",
     "ACTIONS": "Акции",
     "USERS": "Корисници",
@@ -78,6 +104,26 @@
     "SURNAME": "Презиме",
     "ROLE": "Улога",
     "USERNAME": "Индекс",
+    "EMAIL": "Е-пошта",
+    "CREATE_NEW": "Креирај нов",
+    "COURSE_NAME": "Име на курс",
+    "STUDY_YEAR": "Учебна година",
+    "EDIT_STUDENTS": "Измени Студенти",
+    "EDIT_TEACHERS": "Измени Професори",
+    "EDIT_INFO": "Измени инфо",
+<<<<<<< HEAD
+    "EDIT_USERS": "Измени корисници",
+    "CREATE": "Креирај",
+    "SEMINAR_WORK": "Семинарска работа",
+    "APPLY": "Аплицирај",
+    "SAVE": "Зачувај",
+    "TOTAL": "Вкупно",
+    "STUDENTS": "Студенти",
+    "CURRENT": "Моментални",
+    "ALL": "Сите"
+=======
+    "CREATE": "Креирај"
     "EMAIL": "Е-пошта"
+>>>>>>> ebbd07149afa40761cf484d44013c4806852be02
   }
 }

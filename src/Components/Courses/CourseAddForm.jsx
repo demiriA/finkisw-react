@@ -1,5 +1,9 @@
 import React, {Component} from "react";
 import { Link } from 'react-router-dom';
+import language from "../../Resources/lang";
+import cookie from "react-cookies";
+import axios from "axios";
+import config from "../../Resources/Config";
 
 class CourseAddForm extends Component{
 
@@ -7,24 +11,32 @@ class CourseAddForm extends Component{
       super(props);
       this.state = {
         name: '',
-        year: '',
-        teachers: []
-      }
+        year: ''
+      };
 
       this.onSubmit = this.onSubmit.bind(this);
       this.onChange = this.onChange.bind(this);
     }
 
-    createCourse(course){
-      console.log(course);
+    createCourse(courseDetails){
+        let access_token = cookie.load("USER_SESSION");
+        axios.request({
+            url:`/api/courses?access_token=${access_token}`,
+            method: 'post',
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
+            data: courseDetails
+        })
+            .then( response =>{
+                this.props.history.push("/courses");
+            })
+            .catch(err => console.log(err));
     }
 
     onSubmit(e){
       const course = {
         name: this.state.name,
-        year: this.state.year,
-        teachers: this.state.teachers
-      }
+        studyYear: this.state.year
+      };
       this.createCourse(course);
       e.preventDefault();
     }
@@ -41,19 +53,19 @@ class CourseAddForm extends Component{
     }
 
     render() {
+        let lang = language.en;
+        if(localStorage.getItem("lang") === "mk"){
+            lang = language.mk;
+        }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h3>Create a course</h3>
+                <h3>{lang.CREATE_NEW}</h3>
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" name="name" ref="name" placeholder="Name" className="form-control mb-2" value={this.state.name} onChange={this.onChange} />
-                    <input type="text" name="year" ref="year" placeholder="Year" className="form-control mb-2" value={this.state.year} onChange={this.onChange} />
-                    <select multiple className="form-control mb-2" name="teachers" ref="teachers" value={this.state.teachers} onChange={this.onChange}>
-                        <option value="Teacher One">Teacher One</option>
-                        <option value="Teacher One">Teacher Two</option>
-                    </select>
-                    <input type="submit" value="Create" className="btn btn-outline-primary mb-2"/>
+                    <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" value={this.state.name} onChange={this.onChange} />
+                    <input type="text" name="year" ref="year" placeholder={lang.STUDY_YEAR} className="form-control mb-2" value={this.state.year} onChange={this.onChange} />
+                    <input type="submit" value={lang.CREATE} className="btn btn-outline-primary mb-2"/>
                 </form>
-                <p><Link to="/courses">Back to list</Link></p>
+                <p><Link to="/courses">{lang.BACK_TO_LIST}</Link></p>
             </div>
         );
     }
