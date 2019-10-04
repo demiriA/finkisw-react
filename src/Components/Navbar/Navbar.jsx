@@ -17,27 +17,9 @@ class Navbar extends Component{
 
   componentDidMount(){
     this.userDetails();
-    this.getAllCourses();
   }
 
-  getAllCourses(){
-    let access_token = cookie.load("USER_SESSION");
-    axios.request({
-      url:`/api/courses?access_token=${access_token}`,
-      method: 'get',
-      baseURL: "http://"+config.ipAddress+":"+config.port+"/"
-    })
-        .then( response => {
-          this.setState({
-            courses: response.data
-          });
-        })
-        .catch( err =>{
-          console.log(err);
-        });
-  }
-
-  getAllCourses(){
+  getCoursesByUser(){
     let access_token = cookie.load("USER_SESSION");
     let type = this.state.role === "TEACHER_USER" ? "t" : "s";
     let username = this.state.user.username;
@@ -68,7 +50,7 @@ class Navbar extends Component{
             user: response.data,
             role: response.data.roles[0]
           });
-          this.getAllCourses();
+          this.getCoursesByUser();
         });
   }
 
