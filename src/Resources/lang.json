@@ -55,7 +55,15 @@
     "TOTAL": "Total",
     "STUDENTS": "Students",
     "CURRENT": "Current",
-    "ALL": "All"
+    "ALL": "All",
+    "SUGGESTIONS" : "Suggestions",
+    "STUDENT_NAME" : "Student name",
+    "TOPIC": "Topic",
+    "STATUS": "Status",
+    "PREVIEW": "Preview",
+    "NOT_REVIEWED":"Not reviewed",
+    "ACCEPTED": "Accepted",
+    "REJECTED": "Rejected"
   },
   "mk": {
     "ADMIN": "Администратор",
@@ -113,6 +121,14 @@
     "TOTAL": "Вкупно",
     "STUDENTS": "Студенти",
     "CURRENT": "Моментални",
-    "ALL": "Сите"
+    "ALL": "Сите",
+    "SUGGESTIONS" : "Предлози",
+    "STUDENT_NAME" : "Име на студент",
+    "TOPIC": "Тема",
+    "STATUS": "Статус",
+    "PREVIEW": "Преглед",
+    "NOT_REVIEWED":"Не прегледан",
+    "ACCEPTED": "Прифатен",
+    "REJECTED": "Одбиен"
   }
 }

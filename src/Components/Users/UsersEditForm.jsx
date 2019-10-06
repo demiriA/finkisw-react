@@ -118,7 +118,7 @@ class UsersEditForm extends Component{
         }
         return (
             <div className="form-group col-md-6 m-auto">
-                <h3>{lang.EDIT} {this.state.username}</h3>
+                <h3>{lang.EDIT} {this.state.username} ({this.state.role.toLowerCase().split("_")[0]})</h3>
                 <form onSubmit={this.onSubmit}>
                     <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" value={this.state.name} onChange={this.onChange} required="required"/>
                     <input type="text" name="surname" ref="surname" placeholder={lang.SURNAME} className="form-control mb-2" value={this.state.surname} onChange={this.onChange} required="required"/>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import MyHomeworks from "../Homeworks/MyHomeworks";
+import ProposeTable from "../Propose/ProposeTable";
 import cookie from "react-cookies";
 import axios from "axios";
 import config from "../../Resources/Config";
@@ -74,17 +75,39 @@ class CoursePreview extends Component {
                   <Link to={"/course/"+id} className="course-link-prev"> {name}</Link>
               </h1><hr/>
               <ul className="nav nav-tabs nav-justified">
-                  <li className="nav-item">
-                      <a className="nav-link active" href="#homeworks" data-toggle="tab">{lang.SEMINAR_WORK}</a>
-                  </li>
+                  {
+                    this.state.role === "TEACHER_USER" ?
+                    (
+                      <li className="nav-item">
+                          <a className="nav-link active" href="#suggestions" data-toggle="tab">{lang.SUGGESTIONS}</a>
+                      </li>
+                    ) :
+                    (
+                      <li className="nav-item">
+                          <a className="nav-link active" href="#homeworks" data-toggle="tab">{lang.SEMINAR_WORK}</a>
+                      </li>
+                    )
+                  }
                   <li className="nav-item">
                       <a className="nav-link" href="#info" data-toggle="tab">{lang.INFO}</a>
                   </li>
               </ul>
               <div className="tab-content">
-                  <div className="tab-pane active" id="homeworks">
-                      <MyHomeworks/>
-                  </div>
+                  {
+                    this.state.role === "TEACHER_USER" ?
+                    (
+                          <div className="tab-pane active" id="suggestions">
+                              <br/>
+                              <h4>{lang.SUGGESTIONS}</h4>
+                              <ProposeTable />
+                          </div>
+                    ) :
+                    (
+                      <div className="tab-pane active" id="homeworks">
+                          <MyHomeworks/>
+                      </div>
+                    )
+                  }
                   <div className="tab-pane" id="info">
                       {
                           this.state.role === "TEACHER_USER" ? (<Link to={"/courses/editInfo/"+id} className="btn btn-sm btn-primary m-1 float-right">{lang.EDIT_INFO}</Link>) : ""
