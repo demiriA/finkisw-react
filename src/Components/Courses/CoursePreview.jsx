@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import MyHomeworks from "../Homeworks/MyHomeworks";
-import ProposeTable from "../Propose/ProposeTable";
+import MyProject from "../Project/MyProject";
+import ProjectTable from "../Project/ProjectTable";
 import cookie from "react-cookies";
 import axios from "axios";
 import config from "../../Resources/Config";
@@ -79,12 +79,12 @@ class CoursePreview extends Component {
                     this.state.role === "TEACHER_USER" ?
                     (
                       <li className="nav-item">
-                          <a className="nav-link active" href="#suggestions" data-toggle="tab">{lang.SUGGESTIONS}</a>
+                          <a className="nav-link active" href="#suggestions" data-toggle="tab">{lang.PROJECTS}</a>
                       </li>
                     ) :
                     (
                       <li className="nav-item">
-                          <a className="nav-link active" href="#homeworks" data-toggle="tab">{lang.SEMINAR_WORK}</a>
+                          <a className="nav-link active" href="#projects" data-toggle="tab">{lang.SEMINAR_WORK}</a>
                       </li>
                     )
                   }
@@ -98,13 +98,13 @@ class CoursePreview extends Component {
                     (
                           <div className="tab-pane active" id="suggestions">
                               <br/>
-                              <h4>{lang.SUGGESTIONS}</h4>
-                              <ProposeTable />
+                              <h4>{lang.PROJECTS}</h4>
+                              <ProjectTable course={this.props.match.params.id} />
                           </div>
                     ) :
                     (
-                      <div className="tab-pane active" id="homeworks">
-                          <MyHomeworks/>
+                      <div className="tab-pane active" id="projects">
+                          <MyProject courseId={this.props.match.params.id}/>
                       </div>
                     )
                   }

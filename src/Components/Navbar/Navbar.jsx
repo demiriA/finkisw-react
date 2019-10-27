@@ -21,7 +21,7 @@ class Navbar extends Component{
 
   getCoursesByUser(){
     let access_token = cookie.load("USER_SESSION");
-    let type = this.state.role === "TEACHER_USER" ? "t" : "s";
+    let type = this.state.role.roleName === "TEACHER_USER" ? "t" : "s";
     let username = this.state.user.username;
     axios.request({
       url:`/api/courses/${type}/${username}?access_token=${access_token}`,
@@ -108,7 +108,7 @@ class Navbar extends Component{
                 <Link to={"#"} className="nav-link dropdown-toggle text-light" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                   <i className="fas fa-th"/> {
-                  roleName === "ADMIN_USER" ? <font>{lang.ACTIONS}</font> : (roleName === "TEACHER_USER" ? <font>{lang.ACTIONS}</font> : <font>{lang.COURSES}</font>)
+                  roleName === "ADMIN_USER" ? <font>{lang.ACTIONS}</font> : <font>{lang.COURSES}</font>
                 }
                 </Link>
                 <div className="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
@@ -118,20 +118,14 @@ class Navbar extends Component{
                               <Link className="dropdown-item" to="/users"><i className="fas fa-angle-right"/> {lang.USERS}</Link>
                               <Link className="dropdown-item" to="/courses"><i className="fas fa-angle-right"/> {lang.COURSES}</Link>
                             </React.Fragment>
-                    ) :
-                        roleName === "TEACHER_USER" ?
-                        (
-                            <React.Fragment>
-                              <Link className="dropdown-item" to="/homeworks"><i className="fas fa-angle-right"/> {lang.HOMEWORK}</Link>
-                            </React.Fragment>
+                    )
+                    :
+                    (
+                        this.state.courses.map(
+                            (course) =>
+                                <Link key={course.id} className="dropdown-item" to={"/course/"+course.id}><i className="fas fa-angle-right"/> {course.name}</Link>
                         )
-                            :
-                            (
-                                this.state.courses.map(
-                                    (course) =>
-                                        <Link key={course.id} className="dropdown-item" to={"/course/"+course.id}><i className="fas fa-angle-right"/> {course.name}</Link>
-                                )
-                            )
+                    )
                   }
                 </div>
               </li>

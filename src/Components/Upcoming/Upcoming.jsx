@@ -9,26 +9,28 @@ class Upcoming extends Component{
     constructor(){
         super();
         this.state = {
+            id: '',
             role:'',
-            homeworks:[
-                {
-                    id: 1,
-                    name: "Homework 1",
-                    course: "Course 2",
-                    expire: "31 Aug, 23:59"
-                },
-                {
-                    id: 2,
-                    name: "Homework 2",
-                    course: "Course 1",
-                    expire: "23 Sep, 23:59"
-                }
-            ]
+            projects:[]
         }
     }
 
     componentDidMount() {
         this.getUser();
+    }
+
+    getProjectsByStudent(){
+        let access_token = cookie.load("USER_SESSION");
+        axios.request({
+            url:`/api/projects/student/${this.state.id}?access_token=${access_token}`,
+            method: 'get',
+            baseURL: "http://"+config.ipAddress+":"+config.port+"/",
+        })
+            .then( response => {
+                this.setState({
+                    projects: response.data
+                });
+            });
     }
 
     getUser(){
@@ -40,8 +42,12 @@ class Upcoming extends Component{
         })
             .then( response => {
                 this.setState({
+                    id: response.data.id,
                     role: response.data.roles[0].roleName
                 });
+                if(response.data.roles[0].roleName === "STUDENT_USER"){
+                    this.getProjectsByStudent();
+                }
             });
     }
 
@@ -55,16 +61,14 @@ class Upcoming extends Component{
         } else{
             return(
                 <div className="alert alert-secondary">
-                    <h2><i className="fas fa-file-upload"/> {lang.UPCOMING_UPLOADS}</h2>
+                    <h2><i className="fas fa-file-upload"/> {lang.UPLOADED_PROJECTS}</h2>
                     <hr/>
-                    <div className="row">
-                        {
-                            this.state.homeworks.map(
-                                (homework) =>
-                                    <UpcomingItem key={homework.id} homework={homework} />
-                            )
-                        }
-                    </div>
+                    {
+                        this.state.projects.map(
+                            (project) =>
+                                <UpcomingItem key={project.id} project={project} />
+                        )
+                    }
                 </div>
             );
         }

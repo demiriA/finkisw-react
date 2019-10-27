@@ -7,22 +7,21 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Help from "./Pages/Help";
 import CoursePreview from "./Courses/CoursePreview";
-import HomeworkPreview from "./Homeworks/HomeworkPreview";
 import CourseTable from "./Courses/CourseTable";
 import CourseAddForm from "./Courses/CourseAddForm";
 import CourseEditForm from "./Courses/CourseEditForm";
 import UsersTable from "./Users/UsersTable";
 import UsersAddForm from "./Users/UsersAddForm";
 import UsersEditForm from "./Users/UsersEditForm";
-import HomeworksTable from "./Homeworks/HomeworksTable";
-import HomeworksAddForm from "./Homeworks/HomeworksAddForm";
-import HomeworksEditForm from "./Homeworks/HomeworksEditForm";
 import UserSettingsForm from "./Users/UserSettingsForm";
 import auth from '../Auth/Auth';
 import CourseEditInfoForm from "./Courses/CourseEditInfoForm";
 import CourseEditTeachers from "./Courses/CourseEditTeachers";
+import ProjectPreview from "./Project/ProjectPreview";
+import ProjectEditForm from "./Project/ProjectEditForm";
+import ProjectUpload from "./Project/ProjectUpload";
 
-function ProtectedRoutes (props){
+function ProtectedRoutes (){
 
   if(!auth.isAuthenticated()){
     return null;
@@ -50,10 +49,10 @@ function ProtectedRoutes (props){
               <Route exact path="/users/create" component={UsersAddForm}/>
               <Route exact path="/users/edit/:id" component={UsersEditForm}/>
 
-              <Route exact path="/homework/:id" component={HomeworkPreview}/>
-              <Route exact path="/homeworks" component={HomeworksTable}/>
-              <Route path="/homeworks/create" component={HomeworksAddForm}/>
-              <Route path="/homeworks/edit/:id" component={HomeworksEditForm}/>
+              <Route path="/project/preview/:id" component={ProjectPreview} />
+              <Route path="/project/edit/:id" component={ProjectEditForm} />
+              <Route path="/project/upload/:id" component={ProjectUpload}/>
+
               <Route path="*" component={() => "404 NOT FOUND"}/>
             </Switch>
             <Footer/>

@@ -63,7 +63,20 @@
     "PREVIEW": "Preview",
     "NOT_REVIEWED":"Not reviewed",
     "ACCEPTED": "Accepted",
-    "REJECTED": "Rejected"
+    "REJECTED": "Rejected",
+    "PROJECTS": "Projects",
+    "UPLOADED_PROJECTS": "Uploaded projects",
+    "UPDATED": "Updated",
+    "FEEDBACK": "Feedback",
+    "UPLOAD": "Upload",
+    "UPLOAD_PROJECT": "Upload project",
+    "ACCEPT": "Accept",
+    "REJECT": "Reject",
+    "DOWNLOAD": "Download",
+    "FILE": "File",
+    "NOT_UPLOADED": "Not uploaded",
+    "PRINT_PROJECT": "Print project",
+    "THIS_ASSIGMENT_IS_MY_OWN_WORK": "This assignment is my own work."
   },
   "mk": {
     "ADMIN": "Администратор",
@@ -129,6 +142,19 @@
     "PREVIEW": "Преглед",
     "NOT_REVIEWED":"Не прегледан",
     "ACCEPTED": "Прифатен",
-    "REJECTED": "Одбиен"
+    "REJECTED": "Одбиен",
+    "PROJECTS": "Проекти",
+    "UPLOADED_PROJECTS": "Поставени проекти",
+    "UPDATED": "Ажурирано",
+    "FEEDBACK": "Коментар",
+    "UPLOAD": "Прикачи",
+    "UPLOAD_PROJECT": "Прикачи проект",
+    "ACCEPT": "Прифати",
+    "REJECT": "Одбиј",
+    "DOWNLOAD": "Превземи",
+    "FILE": "Датотека",
+    "NOT_UPLOADED": "Не е прикачено",
+    "PRINT_PROJECT": "Печати проект",
+    "THIS_ASSIGMENT_IS_MY_OWN_WORK": "Оваа задача е моја сопствена работа."
   }
 }
