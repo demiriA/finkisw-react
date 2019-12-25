@@ -52,7 +52,7 @@ class UsersEditForm extends Component{
             baseURL: "http://"+config.ipAddress+":"+config.port+"/",
         })
             .then( response =>{
-                // console.log("response",response.data);
+                // console.log("response",response.data.roles[0].roleName);
                 this.setState({
                     id: response.data.id,
                     password: response.data.password,
@@ -122,11 +122,11 @@ class UsersEditForm extends Component{
                 <form onSubmit={this.onSubmit}>
                     <input type="text" name="name" ref="name" placeholder={lang.NAME} className="form-control mb-2" value={this.state.name} onChange={this.onChange} required="required"/>
                     <input type="text" name="surname" ref="surname" placeholder={lang.SURNAME} className="form-control mb-2" value={this.state.surname} onChange={this.onChange} required="required"/>
-                    <select className="form-control mb-2" name="role" ref="role" value={this.state.role} onChange={this.onChange} required="required" >
+                    <select className="form-control mb-2" name="role" ref="role" onChange={this.onChange} required="required" >
                         {
-                            this.state.roles.map( (role) => (
-                                <option key={role.id} value={role.id}>{role.roleName}</option>
-                            ))
+                            this.state.roles.map( (role) =>
+                                this.state.role === role.roleName ? <option key={role.id} value={role.id} selected="selected" >{role.roleName}</option> : <option key={role.id} value={role.id}>{role.roleName}</option>
+                            )
                         }
                     </select>
                     <input type="submit" value={lang.UPDATE} className="btn btn-outline-primary mb-2"/>
