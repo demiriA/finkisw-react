@@ -28,7 +28,7 @@ class UsersEditForm extends Component{
         this.getRoles();
         this.getUser();
     }
-
+//
     getRoles(){
         let access_token = cookie.load("USER_SESSION");
         axios.request({
@@ -107,8 +107,7 @@ class UsersEditForm extends Component{
     }
 
     getRoleById(id){
-        let role = this.state.roles.filter( role => role.id === id);
-        return role;
+        return this.state.roles.filter(role => role.id === id);
     }
 
     render() {
